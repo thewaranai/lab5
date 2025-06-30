@@ -1,54 +1,67 @@
 import java.util.Scanner;
+
 public class Main {
-    public static void main(String[] args){
-        System.out.println("Выберите выражение:\n1. y=3x+5\n2. y=(a+b)/(a-b)\n3. y=(ax/b)!");
+    public static void main(String[] args) {
+        System.out.print("a: ");
         Scanner in = new Scanner(System.in);
-        int choice = in.nextInt();
-        Calculator calc = new Calculator();
-        if (choice == 1){
-            calc.firstMath();
-        } else if (choice == 2) {
-            calc.secondMath();
-        }
-        else if (choice == 3){
-            calc.thirdMath();
-        }
+        int a = in.nextInt();
+        System.out.print("b: ");
+        in = new Scanner(System.in);
+        int b = in.nextInt();
+        System.out.print("x: ");
+        in = new Scanner(System.in);
+        int x = in.nextInt();
+        Equation eq1 = new Equation(x);
+        Equation eq2 = new Equation(a, b);
+        Equation eq3 = new Equation(a, x, b);
     }
 }
-class Calculator {
-    Scanner in = new Scanner(System.in);
-    public void firstMath(){
-        System.out.println("Введите х:");
-        double x = in.nextDouble();
-        double y = 3 * x + 5;
-        System.out.println("3*" + x + "+5=" + y);
+
+class Equation {
+    public int x, a, b;
+
+    public Equation(int x) {
+        this.x = x;
+        line(x);
     }
-    public void secondMath(){
-        System.out.println("Введите a:");
-        double a = in.nextDouble();
-        System.out.println("Введите b:");
-        double b = in.nextDouble();
-        double y = (a+b) / (a-b);
-        System.out.println("(" + a + "+" + b + ") / (" + a + "-" + b + ")=" + y);
+
+    public Equation(int a, int b) {
+        this.a = a;
+        this.b = b;
+        line(a, b);
     }
-    public void thirdMath(){
-        System.out.println("Введите a:");
-        double a = in.nextDouble();
-        System.out.println("Введите х:");
-        double x = in.nextDouble();
-        System.out.println("Введите b:");
-        double b = in.nextDouble();
-        double y = factorial((a * x) / b);
-        System.out.println("(" + a + "*" + x + "/" + b + ")=" + y);
+
+    public Equation(int a, int x, int b) {
+        this.a = a;
+        this.b = b;
+        this.x = x;
+        line(a, x, b);
     }
-    public static long factorial(double n) {
-        if (n == 0) {
-            return 1;
+
+    public void line(int x) {
+        System.out.println("y = 3x + 5 = " + (3 * x + 5));
+    }
+
+    public void line(int a, int b) {
+        if (a - b != 0) {
+            System.out.println("y = (a+b)/(a-b) = " + ((a + b) / (a - b)));
+        } else {
+            System.out.println("������ �� 0 ������");
         }
-        long result = 1;
-        for (int i = 1; i <= n; i++) {
-            result *= i;
+    }
+
+    public void line(int a, int x, int b) {
+        if (b != 0) {
+            System.out.println("y = (ax/b)! = " + factorial((a * x) / b));
+        } else {
+            System.out.println("������ �� 0 ������");
         }
-        return result;
+    }
+
+    int factorial(int x) {
+        if (x == 0) return 1;
+        int res = 1;
+        for (int i = 1; i <= x; i++) res *= i;
+        return res;
     }
 }
